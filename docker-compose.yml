@@ -1,0 +1,28 @@
+﻿version: '3.8'
+services:
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Giuhy56P # Замените на свой пароль
+      POSTGRES_DB: KnittedToysDb
+    ports:
+      - "5432:5432" # Для доступа извне Docker, если нужно
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Персистентные данные
+  api:
+    build:
+      context: .
+      dockerfile: Presentation/Dockerfile
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "5000:8080" # API на порту 5000 хоста
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080 # Внутренний порт в контейнере
+      - ConnectionStrings__DefaultConnection=Host=db;Database=KnittedToysDb;Username=postgres;Password=Giuhy56P # Подключение к db сервису
+volumes:
+  postgres_data:
