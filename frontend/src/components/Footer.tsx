@@ -1,4 +1,4 @@
-const TELEGRAM_DIRECT = "https://t.me/miracles211";
+const TELEGRAM_DIRECT = "https://t.me/Eternal_Ice_Knight";
 
 export default function Footer() {
   return (
